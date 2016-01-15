@@ -90,7 +90,7 @@ If you're developing a whole new set of classes implementing a particular model,
 
 Now that we ~~kinda~~ know how BEAST works in the inside, let's talk about one of the most important features of BEAST: its E**X**tensible **M**arkup **L**anguage ([XML](https://en.wikipedia.org/wiki/XML)) input file specification.
 Knowing your way around the XML syntax is important because the graphical utility for building XMLs is not nearly exhaustive. Thus, many of the interesting models are only available through manually editing the XMLs. 
-First, let's look at a [BEAUti-constructed XML](https://github.com/maxbiostat/CODE/blob/master/BEAST_guts/dengue_example.xml). Now let's mess round a bit.
+First, let's look at a [BEAUti-constructed XML](https://github.com/AshworthCodeMonkeys/talks/blob/master/20_11_2015-BEAST_guts/dengue_example.xml). Now let's mess round a bit.
 
 Suppose we want a Gamma distribution for the clock model, that is, we want to model the among-branch variation with a Gamma distribution rather than, say, a lognormal.
 
