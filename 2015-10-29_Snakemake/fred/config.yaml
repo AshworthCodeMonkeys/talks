@@ -1,0 +1,9 @@
+bowtie2_preset: "--very-sensitive"
+bowtie2_index: "relative_large_genome"
+merged_output: "combined.bam"
+bamCoverage: "$HOME/.virtualenvs/py27/bin/bamCoverage"
+samples:
+- fedora
+- debian
+- arch
+- opensuse

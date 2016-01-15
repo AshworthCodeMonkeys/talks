@@ -1,0 +1,26 @@
+@HD	VN:1.4	SO:unsorted
+@SQ	SN:chr1	LN:17933
+@SQ	SN:chr2	LN:25740
+@SQ	SN:chr3	LN:29915
+@SQ	SN:chr4	LN:23227
+@SQ	SN:chr5	LN:14778
+@SQ	SN:chr6	LN:25972
+@SQ	SN:chr7	LN:20811
+@SQ	SN:chr8	LN:16588
+@SQ	SN:chr9	LN:21362
+@SQ	SN:chr10	LN:29097
+@SQ	SN:chr11	LN:23439
+@SQ	SN:chr12	LN:28105
+@SQ	SN:chr13	LN:19879
+@SQ	SN:chr14	LN:15165
+@SQ	SN:chr15	LN:21317
+@SQ	SN:chr16	LN:21177
+@SQ	SN:chr17	LN:27640
+@SQ	SN:chr18	LN:21730
+@SQ	SN:chr19	LN:21564
+@SQ	SN:chr20	LN:19098
+@SQ	SN:chr21	LN:11869
+@SQ	SN:chr22	LN:13522
+@SQ	SN:chrX	LN:17332
+@SQ	SN:chrY	LN:10748
+@PG	ID:01	PN:ART_Illumina	CL:/home/bioinfoboy/packages/art_bin_ChocolateCherryCake/art_illumina -na -i relative_large_genome.fa -sam -p -l 125 -ss HS25 -f 0 -m 200 -s 10 -sp -o header -rs 1445857996

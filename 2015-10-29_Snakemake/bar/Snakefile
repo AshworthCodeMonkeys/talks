@@ -1,0 +1,24 @@
+samples = ['flee',
+           'elba',
+           'ljod',
+           'exit',
+           'joss',
+           'raab',
+           'tule',
+           'irus',
+           'deny',
+           'gapy']
+
+rule all:
+  input: expand("{sample}_{pair}.fq", sample=samples, pair=['1','2'])
+
+rule simulate_reads:
+  output:
+    "{sample}_1.fq",
+    "{sample}_2.fq"
+  params:
+    executable = "$HOME/packages/art_bin_ChocolateCherryCake/art_illumina",
+    name = "{sample}"
+  shell:
+    "{params.executable} -na -i genome.fa -p -l 125 -ss HS25 -f 20 -m 200 \
+    -s 10 -sp -o {params.name}_"

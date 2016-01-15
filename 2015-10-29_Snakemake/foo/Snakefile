@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+rule foo:
+  input: "input.txt"
+  output: "output.txt"
+  shell: "sort {input} | sort -k 1 > {output}"
+
+rule clean:
+  input: rules.foo.output
+  shell: "rm {input}"

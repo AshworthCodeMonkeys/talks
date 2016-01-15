@@ -1,0 +1,131 @@
+from snakemake.utils import R
+
+configfile: "config.yaml"
+
+samples = ['flee',
+           'elba',
+           'ljod',
+           'exit',
+           'joss',
+           'raab',
+           'tule',
+           'irus',
+           'deny',
+           'gapy']
+
+# samples = config["samples"] # Talk about list in yaml
+
+rule build_genome:
+  input:
+    "relative_large_genome.fa"
+  output:
+    "relative_large_genome.1.bt2",
+    "relative_large_genome.rev.1.bt2"
+  params: "relative_large_genome"
+  log: "bowtie2-build.log"
+  run:
+    shell("bowtie2-build {input} {params} &> {log}")
+
+rule generate_bams:
+  input:
+    expand("{sample}.bam", sample=samples),
+    expand("{sample}.rpkm.bw", sample=samples)
+
+rule plot:
+  input:
+    expand("{sample}.pdf", sample=samples)
+
+rule clean:
+  shell: "rm -f combined.bam *.bw *.bam *.bai bamfiles.txt *.fq *.log"
+
+rule header:
+  output:
+    "header.sam"
+  log:
+    "header.simulate.log"
+  run:
+    shell("~/packages/art_bin_ChocolateCherryCake/art_illumina -na \
+           -i relative_large_genome.fa -sam -p -l 125 -ss HS25 -f 0 \
+           -m 200 -s 10 -sp -o header &> {log}")
+    shell("rm header1.fq header2.fq")
+
+rule simulate:
+  output:
+    "{sample}_1.fq",
+    "{sample}_2.fq"
+  params:
+    name = "{sample}"
+  log:
+    "{sample}.simulate.log" # Talk about log
+  run:
+    shell("~/packages/art_bin_ChocolateCherryCake/art_illumina -na -i \
+          relative_large_genome.fa -p -l 125 -ss HS25 -f 50 -m 200 \
+          -s 10 -ir 0.01 -ir2 0.01 -dr 0.01 -dr2 0.01 -sp \
+          -o {params.name}_ &> {log}")
+
+rule map:
+  input:
+    one = "{sample}_1.fq",
+    two = "{sample}_2.fq"
+  output:
+    temp("{sample}.sam") # Talk about temp
+  params:
+    id = "{sample}",
+    sm = "{sample}",
+    lb = "{sample}",
+    cn = "'Simulated Reads'",
+    dt = "2015-01-01",
+    preset = config["bowtie2_preset"], # Talk about config variables
+    index = config["bowtie2_index"]
+  log: "{sample}.bowtie2.log"
+  run:
+    shell("bowtie2 -x {params.index} {params.preset} --rg-id {params.id} \
+           --rg SM:{params.sm} --rg LB:{params.lb} --rg CN:{params.cn} \
+           --rg DT:{params.dt} --rg PL:ILLUMINA --rg PU:ATGCGA -p 3 \
+           --no-unal -1 {input.one} -2 {input.two} -S {output} &> {log}")
+
+rule sort_sam:
+  input: "{sample}.sam"
+  output:
+    bam = "{sample}.bam",
+    bai = "{sample}.bam.bai"
+  params:
+    prefix = "{sample}"
+  run:
+    shell("samtools sort -O bam -T {params.prefix} -o {output.bam} {input}")
+    shell("samtools index {output.bam}")
+    with open('bamfiles.txt', 'a') as w: # Talk about native python code
+      print(output.bam, file=w)
+
+rule bam_coverage:
+  input: "{sample}.bam"
+  output: "{sample}.rpkm.bw"
+  params: 
+    executable = config["bamCoverage"]
+  run:
+    shell("{params.executable} --bam {input} --binSize 10 --normalizeUsingRPKM \
+          -o {output}")
+
+rule scripting:
+  output: "{sample}.pdf"
+  run:
+    R("""
+    # Write your R code
+    suppressWarnings(library(ggplot2))
+
+    xvar <- c(rnorm(1500, mean = -1), rnorm(1500, mean = 1.5))
+    yvar <- c(rnorm(1500, mean = 1), rnorm(1500, mean = 1.5))
+    zvar <- as.factor(c(rep(1, 1500), rep(2, 1500)))
+    xy <- data.frame(xvar, yvar, zvar)
+
+    plot = ggplot(xy, aes(x=xvar)) + geom_histogram(aes(y = ..density..),
+      binwidth=0.1, color="black", fill=NA) + theme_bw()
+    ggsave(plot, file="{output}", width=6, height=6)    
+    """)
+
+
+rule merge:
+  input: "bamfiles.txt"
+  output: config["merged_output"]
+  run:
+    shell("samtools merge -h header.sam -b {input} {output}")
