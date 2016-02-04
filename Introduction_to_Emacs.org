@@ -1,0 +1,184 @@
+#+TITLE:An introduction to Emacs
+#+AUTHOR:Elisabet Sjökvist
+ # #+LATEX_CLASS: beamer
+#+LATEX_HEADER:\hypersetup{colorlinks= true, urlcolor= blue,linkcolor= none citecolor= red}
+* What is Emacs, and why use it
+** Why use it
+- text editor that is well integrated with the operating system
+- open source
+- infinitely expandible
+- built in support for many programmig languages
+** Why not to use it
+http://mrozekma.com/editor-learning-curve.png
+** Windows, buffers
+- main buffer
+- mini buffer
+* Key kommands
+** Special keys
+- Ctrl key, abbreviated C
+- Meta key, abbreviated M, usually the alt key, windows key, mac key
+** Opening and closing files, buffers and windows
+- Open file: C-x C-f
+- Write file: C-x C-w
+- Save file: C-x C-s
+- Open window: C-x 2 (horizontally) or C-x 3 (vertically)
+- Move to next widow: C-x o
+- Switch to buffer: C-x b
+- Kill buffer: C-x k
+- Close active window: C-x 0
+- Close all windows exept active window: C-x 1
+- Close Emacs: C-x C-c
+- Abort command: C-g
+http://www.gnu.org/software/emacs/tour/
+http://www.jesshamrick.com/2012/09/10/absolute-beginners-guide-to-emacs/
+
+* Help-, info- & man-pages
+- C-h t: built in tutorial
+- C-h C-h: help pages
+- M-x man return: eg. M+x man tr
+- M-x info return: opens the gnu info pages in emacs
+
+* The .emacs or .emacs/init.el
+For customization
+try C-z
+to your init file add: (global-unset-key (kbd "C-z"))
+* What is Emacs Lisp?
+"Lisp stands for LISt Processing, and the programming language handles lists (and lists of lists) by putting them between parentheses. The parentheses mark the boundaries of the list. Sometimes a list is preceded by a single apostrophe or quotation mark, ‘'’Lists are the basis of Lisp. The single apostrophe or quotation mark is an abbreviation for the function quote, when it precedes a list, it tells Lisp to do nothing with the list, other than take it as it is written. But if there is no quote preceding a list, the first item of the list is special: it is a command for the computer to obey. (In Lisp, these commands are called functions.)"
+
+* Popular modes and packages
+** Shell
+- M-x shell
+- M-! 
+** Python
+http://www.emacswiki.org/emacs-test/PythonProgrammingInEmacs
+https://github.com/proofit404/anaconda-mode
+http://tkf.github.io/emacs-jedi/latest/ install all dependencies
+Ipython and org mode combined https://github.com/gregsexton/ob-ipython/
+** Latex
+- built in:
+  - C-c C-c pdflatex -> to produce a pdf
+  - C-tab to import references
+- auctex
+** Git
+magit
+** Pdf
+- Pdf-tools
+  https://github.com/politza/pdf-tools
+  Dependencies:
+  libpng-dev libz-dev 
+  libpoppler-glib-dev 
+  libpoppler-private-dev 
+** Org mode
+- Outline processor
+- timestamps C-c . <2016-01-31 sön>
+- Write bulletpoints
+  - structural editing
+    http://orgmode.org/manual/Structure-editing.html
+    rearrange headers with M-S-<up>
+  - visibility cycling
+- TODO todos
+   shift-arrow key (left or right)
+- export to:
+   -latex
+http://orgmode.org/manual/LaTeX-and-PDF-export.html#LaTeX-and-PDF-export
+http://orgmode.org/worg/org-tutorials/org-latex-export.html
+   -html
+   -pdf and more...
+# elisp:(org-beamer-export-to-pdf)
+*** babel
+built in package for incorporating source code:
+http://orgmode.org/worg/org-contrib/babel/intro.html#source-code-blocks-babel
+#+BEGIN_SRC python :results output :exports both #:exports code :exports results
+print("hello world")
+#+END_SRC
+
+#+RESULTS:
+: hello world
+
+#+name: square
+#+header: :var x=0
+#+begin_src python :exports none
+  return x*x
+#+end_src
+
+#+call: square(x=6)
+
+<s - tab: to open a source code block
+within the src, type C-c '
+this opens up a new window with the appropriate language, to import this back into the document, type C-c ' again.
+
+C-c C-c to evaluate buffer
+yehttp://orgmode.org/manual/The-export-dispatcher.html#The-export-dispatcher
+
+http://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
+
+http://orgmode.org/worg/org-tutorials/
+- Org + babel
+
+Embedding code:
+
+https://www.youtube.com/watch?v=lsYdK0C2RvQ
+
+Reproducible reserach with org-mode:
+
+https://www.youtube.com/watch?v=1-dUkyn_fZA
+
+* Package handling
+** TODO .emacs .emacs.d/init.el
+
+http://www.gnu.org/software/emacs/manual/html_node/emacs/Init-Examples.html#Init-Examples
+
+Add this to your .emacs or .emacs.d/init.el file:
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/")
+   t)
+  (package-initialize))
+
+- melpa instructions:
+http://ergoemacs.org/emacs/emacs_package_system.html
+
+- An alternative way to installing packages is described here
+http://y.tsutsumi.io/emacs-from-scratch-part-2-package-management.html
+
+- package repositories and instructions
+http://www.emacswiki.org/emacs-test/ELPA
+M-x list-packages
+M-x package-install
+restart emacs or type M-x eval-buffer					      
+
+- as an example lets install snakemake package for syntax highlighting
+M-x list-packages
+C-s snakemake
+https://github.com/kyleam/snakemake-mode
+* Misc
+** Lint
+flycheck, flymake...
+** Autocomplete
+- auto-complete for programming in emacs
+** Helm
+For better complete-functions in Emacs
+http://tuhdo.github.io/helm-intro.html
+** Abbrev mode
+https://www.emacswiki.org/emacs/AbbrevMode
+** Email client
+M-x gnus
+http://www.macs.hw.ac.uk/~rs46/posts/2014-01-13-mu4e-email-client.html
+http://pragmaticemacs.com/emacs/master-your-inbox-with-mu4e-and-org-mode/
+** Games
+M-x tetris
+* Additional links
+http://emacsrocks.com/
+http://www.emacswiki.org/emacs/EmacsNiftyTricks
+http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
+http://spacemacs.org/
+** Python and git configuration examples for emacs
+https://github.com/AndreaCrotti/minimal-emacs-configuration, https://www.youtube.com/watch?v=0cZ7szFuz18
+https://github.com/jhamrick/emacs
+
+
+
+
