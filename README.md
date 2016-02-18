@@ -1,6 +1,9 @@
 # Talks
 Repository of the talks given at the [Ashworth Code Monkeys](https://groups.google.com/forum/#!forum/ashworth-code-monkeys) meetings
 
+## 2016-02-18
+[**Packages Unwrapped - APT and DPKG**](https://raw.githubusercontent.com/AshworthCodeMonkeys/talks/master/2016_02_18-DPKG.unwrAPT) *by* [Tin Booth](https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQEQJMcouoZ8Rcs2-4GwCokkqgf1QTqJuMFGHnNlQtmCgcYM3yu8g)
+
 ## 2016-02-04
 [**An introduction to Emacs**](https://github.com/AshworthCodeMonkeys/talks/blob/master/Introduction_to_Emacs.org) *by* [Elisabet Sjökvist](https://github.com/ESjokvist)
 
