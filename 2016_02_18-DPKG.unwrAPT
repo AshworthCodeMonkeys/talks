@@ -1,0 +1,210 @@
+ ========================================
+ APT and DPKG - Debian Packages Unwrapped
+ ========================================
+              Tim Booth - tbooth@ed.ac.uk
+ Presented not in PowerPoint on  20160218
+    bitbucket.org/snippets/timbooth/bKRXL
+
+0) APT/DPKG both provide suites of tools
+    apt                 apt-cdrom           apt-get               apt-sortpkgs
+    apt-add-repository  apt-config          apt-extracttemplates  apt-key
+    apt-cache           apt-ftparchive      apt-mark              apturl-gtk
+
+    dpkg
+    dpkg-architecture        dpkg-gensymbols          dpkg-scanpackages
+    dpkg-buildflags          dpkg-log-summary         dpkg-scansources
+    dpkg-buildpackage        dpkg-maintscript-helper  dpkg-shlibdeps
+    dpkg-checkbuilddeps      dpkg-mergechangelogs     dpkg-source
+    dpkg-deb                 dpkg-name                dpkg-split
+    dpkg-distaddfile         dpkg-parsechangelog      dpkg-statoverride
+    dpkg-divert              dpkg-preconfigure        dpkg-trigger
+    dpkg-genchanges          dpkg-query               dpkg-vendor
+    dpkg-gencontrol          dpkg-reconfigure
+
+    ...or, if you like:
+    synaptic    gdebi   update-manager
+
+
+1) Everything (in Debian) is packages.
+
+$ dpkg-query -Wf $'${Essential}\t${Package}\t\t\t${Version}\n' | grep '^yes'
+yes base-files          7.2ubuntu11
+yes base-passwd         3.5.38
+yes bash            4.3-14ubuntu1
+yes bsdutils            1:2.26.2-6ubuntu3
+yes coreutils           8.23-4ubuntu2
+yes dash            0.5.7-4ubuntu2
+yes debianutils         4.5.1
+yes diffutils           1:3.3-1
+yes dpkg            1.18.2ubuntu5.1
+yes e2fsprogs           1.42.12-1ubuntu2
+yes findutils           4.4.2-9build1
+yes grep            2.21-2
+yes gzip            1.6-4ubuntu1
+yes hostname            3.15ubuntu2
+yes init            1.23ubuntu3
+yes libc-bin            2.21-0ubuntu4.1
+yes login           1:4.1.5.1-1.1ubuntu7
+yes mount           2.26.2-6ubuntu3
+yes ncurses-base            5.9+20150516-2ubuntu1
+yes ncurses-bin         5.9+20150516-2ubuntu1
+yes perl-base           5.20.2-6ubuntu0.1
+yes sed         4.2.2-6.1
+yes tar         1.27.1-2
+yes util-linux          2.26.2-6ubuntu3
+
+Also, the kernel, but that's not considered "essential":
+
+$ dpkg-query -l | grep linux-image-
+ii  linux-image-4.2.0-27-generic         4.2.0-27.32    amd64
+ Linux kernel image for version 4.2.0 on 64 bit x86 SMP
+ii  linux-image-extra-4.2.0-27-generic   4.2.0-27.32    amd64
+ Linux kernel extra modules for version 4.2.0 on 64 bit x86 SMP
+ii  linux-image-generic                  4.2.0.27.30    amd64
+ Generic Linux kernel image
+
+
+2) Basic usage - find, install, remove
+
+$ sudo apt-get install sl
+$ sl
+$ sudo apt-get remove sl
+
+
+3) The package manager believes in consistency
+
+$ apt-get download stacks-web
+$ sudo dpkg -i stacks-web_1.34-1_all.deb
+
+...fails due to missing deps :-(
+...and now your system is inconsistent!
+
+$ sudo apt-get -f install
+
+...satisfies deps and makes it all good :-)
+
+4) Removing a package does not lose your custom settings -
+   for that you need to purge it.
+
+$ sudo apt-get remove stacks-web
+$ dpkg -s stacks-web
+Package: stacks-web
+Status: deinstall ok config-files
+...
+$ dpkg -L stacks-web
+/etc
+/etc/stacks
+/etc/stacks/constants.php
+/etc/apache2
+/etc/apache2/conf-available
+/etc/apache2/conf-available/stacks-web.conf
+
+$ sudo apt-get purge stacks-web
+$ dpkg -L stacks-web
+dpkg-query: package 'stacks-web' is not installed
+
+(NB - for the example in 2, sl doesn't have any config, so remove == purge)
+
+
+4) DO NOT FIGHT THE PACKAGE MANAGER!
+
+dpkg has a --force-all option.  It is occasionally useful for removing a
+package that refuses to die:
+
+$ sudo dpkg --force-all -P stubborn-orrid-package
+
+But don't try to force install anything.  It won't work.
+
+
+5) Do not mess with files that belong to the package manager
+
+$ dpkg -L cups
+...
+$ dpkg -s cups
+...
+
+You can edit /etc/cups/snmp.conf because it's in Conffiles.  Leave the
+rest alone.  Updates will clobber them.
+
+If you do need to edit a package-owned file, dpkg-divert is your friend:
+
+$ cd /usr/share/X11/xkb/symbols
+$ dpkg -S `pwd`/gb
+
+#Note the counterintuitive order of old and new names
+$ sudo dpkg-divert --local --divert `pwd`/gb.distrib --rename `pwd`/gb
+
+Now, /usr/share/X11/xkb/symbols/gb is yours to tinker with.
+
+
+6) How to install a .deb package on a .rpm system or vice-versa
+
+Don't
+
+..."But I heard about this tool called Alien!"
+
+Don't bother
+
+7) How to install two versions of a package at once
+
+You can't
+
+8) How to install a package to a different location
+
+You can't
+
+9) How to have multiple package sources for APT
+
+This is not only possible but encouraged.
+
+(This specific example only works on Ubuntu!)
+# apt-get install software properties-common
+# apt-add-repository ppa:bugs-launchpad-net-falkensweb/cool-retro-term
+# apt-get update
+# apt-get install cool-retro-term
+
+$ cool-retro-term
+
+In general, edit /etc/apt/sources.list as you like.
+
+While we're at it, you can also poke around in /var/lib/dpkg.
+
+10) When you have multiple sources, apt-cache policy is useful
+
+$ apt-cache policy openssh-server
+
+11) How to install two versions of a package at once?
+    How to install a package to a different location?
+
+I though we covered this.  You can't!
+
+Oh, alright then, you can unpack a package manually...
+
+$ wget some_package_you_found.deb
+$ mkdir -p some_package/DEBIAN
+$ dpkg -x some_package_you_found.deb some_package
+$ dpkg -e some_package_you_found.deb some_package/DEBIAN
+
+For some packages, you will be able to run them from the unpacked
+folder.  You can also tinker with the contents and then:
+
+$ fakeroot dpkg -b . ..
+
+12) APT can help you if you're building a package from source.
+
+Say you want to build a specific version of R.  You unpack the .tar.gz,
+try running ./configure and it reports a bunch of missing libraries.
+
+$ dpkg -S /usr/bin/R
+r-base-core: /usr/bin/R
+$ sudo apt-get build-dep r-base-core
+
+This will install everything APT thinks is needed to build R.
+
+13) Where do .deb packages come from?
+
+Mumble mumble...something about a stork...ask your father...
+
+
+^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@NO CARRIER
+telnet> _
