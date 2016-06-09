@@ -1,6 +1,11 @@
 # Talks
 Repository of the talks given at the [Ashworth Code Monkeys](https://groups.google.com/forum/#!forum/ashworth-code-monkeys) meetings
 
+## 2016-06-09
+[**SSH Tips**](https://github.com/AshworthCodeMonkeys/talks/tree/master/2016-06-09_SSH) *by* [Kashyap Chhatbar](https://github.com/kashyapchhatbar) @kashyapchhatbar
+
+## 2016-05-12
+[**Fun with d3**](https://github.com/AshworthCodeMonkeys/talks/tree/master/2016-05-12_Fun_with_d3) *by* [Richard Challis](https://github.com/rjchallis)
 
 ## 2016-04-07
 [**Shiny modules: rich applications from reusable components**](https://github.com/AshworthCodeMonkeys/talks/blob/master/2016-04-07_Shiny/codemonkeys.Rmd) *by* [Jon Manning](https://github.com/pinin4fjords) - view talk in RStudio for maximum impact and embedded Shinies
@@ -23,12 +28,11 @@ Repository of the talks given at the [Ashworth Code Monkeys](https://groups.goog
 ## 2015-10-29
 [**Snakemake**](https://github.com/AshworthCodeMonkeys/talks/tree/master/2015-10-29_Snakemake) *by* [Kashyap Chhatbar](https://github.com/kashyapchhatbar) @kashyapchhatbar
 
-## 2015-10-20 
+## 2015-10-20
 [**GNU Parallel**](https://github.com/AshworthCodeMonkeys/talks/blob/master/2015-10-20.gnuparallel.md) *by* [Sujai Kumar](https://github.com/sujaikumar) @sujaik
 
 # Links
 
 [Google doc with talk schedule and list of interests/expertise](https://docs.google.com/spreadsheets/d/1TBd99HygEq2CR-AM2PcYrcsK5kliRFdgUQB0rcBQIDE)
 
-Original Code monkeys [wiki page](https://www.wiki.ed.ac.uk/display/AshCodes/Ashworth+Codemonkeys) 
-
+Original Code monkeys [wiki page](https://www.wiki.ed.ac.uk/display/AshCodes/Ashworth+Codemonkeys)
