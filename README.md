@@ -1,6 +1,9 @@
 # Talks
 Repository of the talks given at the [Ashworth Code Monkeys](https://groups.google.com/forum/#!forum/ashworth-code-monkeys) meetings
 
+## 2016-11-10
+[**Unit Testing, specifically in Python**](https://raw.githubusercontent.com/AshworthCodeMonkeys/talks/master/2016_11_10_Unit_Testing_Python) *by* [Tim Booth](https://en.wikipedia.org/wiki/Tim_Booth)
+
 ## 2016-06-09
 [**SSH Tips**](https://github.com/AshworthCodeMonkeys/talks/tree/master/2016-06-09_SSH) *by* [Kashyap Chhatbar](https://github.com/kashyapchhatbar) @kashyapchhatbar
 
