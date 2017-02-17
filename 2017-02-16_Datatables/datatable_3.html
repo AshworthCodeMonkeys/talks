@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"/>
+
+    <style>
+        .page-content, th, td {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+
+        table {
+            width: 50%;
+            border: 1px solid black;
+        }
+    </style>
+
+    <title>Datatables 3</title>
+</head>
+<body>
+
+<div id="content" class="page-content">
+
+    <h1>Datatables 3 - column defs</h1>
+    In this example, we've tweaked the way the table is rendered. Instead of initialising the Datatable with
+    empty args, we're passing a Javascript object. In this case, 'columns' passes configurations for each
+    column: the first two are unchanged, the third is hidden by default, and the fourth has a 'render' option
+    where we insert HTML code into the cell, colouring it depending on its value. There is also an 'order'
+    option to choose the default sorting column, and finally we've added a custom 'loading' icon from Font
+    Awesome using 'language.processing'.
+    <br/>
+
+    <table id="datatable_3">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Recorded date</th>
+            <th>Up to date?</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>This</td>
+                <td>542</td>
+                <td>2017-01-01</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>That</td>
+                <td>769</td>
+                <td>2017-02-04</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>Other</td>
+                <td>197</td>
+                <td>2016-12-23</td>
+                <td>False</td>
+            </tr>
+            <tr>
+                <td>Another</td>
+                <td>165</td>
+                <td>2017-01-15</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>More</td>
+                <td>365</td>
+                <td>2017-02-10</td>
+                <td>True</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(
+        function() {
+            var table = $('#datatable_3').DataTable(
+                {
+                    'columns': [
+                        {},
+                        {},
+                        {'visible': false},
+                        {
+                            'render': function(data, type, row, meta) {
+                                if (data == 'False') {
+                                    data = '<div style="color:red">' + data + '</div>';
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    'order': [2],
+                    'language': {'processing': '<i class="fa fa-refresh fa-spin">'}
+                }
+            );
+
+            new $.fn.dataTable.Buttons(
+                table,
+                {'buttons': [{'extend': 'colvis', 'text': 'cols', 'titleAttr': 'Show and hide columns'}]}
+            );
+            table.buttons().container().prependTo(table.table().container());
+        }
+    )
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        .page-content, th, td {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+
+        table {
+            width: 50%;
+            border: 1px solid black;
+        }
+    </style>
+
+    <title>Datatables 4</title>
+</head>
+<body>
+
+<div id="content" class="page-content">
+
+    <h1>Datatables 4 - Ajax</h1>
+    Here, instead of encoding data in the source code of the web page, the table fetches data from an external
+    source - in this case a file, but potentially to a web API. Pass an 'ajax' parameter when initialising
+    the table, and use 'columns' to point each column to the correct key in the JSON. You can also use dot
+    notation to drill down into nested JSON.
+    <br/>
+
+    <table id="datatable_4">
+        <thead>
+        <tr>
+            <th>Barcode</th>
+            <th>Sample ID</th>
+            <th>Run ID</th>
+            <th>Bases (R1)</th>
+            <th>Bases (R2)</th>
+            <th>Project ID</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    $(document).ready(
+        function() {
+
+            var table = $('#datatable_4').DataTable(
+                {
+                    'ajax': {
+                        'url': './example_qc_data.json',  // this could be a URL for a Rest API
+                        'dataSrc': 'data',
+                        // 'headers': {'Authorization': 'some auth headers'}
+                    },
+
+                    'columns': [
+                        {'data': 'barcode'},
+                        {'data': 'sample_id'},
+                        {'data': 'run_id'},
+                        {'data': 'qc.bases_r1'},
+                        {'data': 'qc.bases_r2'},
+                        {'data': 'project_id'}
+                    ],
+                    'order': [0]
+                }
+            );
+
+            new $.fn.dataTable.Buttons(
+                table,
+                {'buttons': [{'extend': 'colvis', 'text': 'cols', 'titleAttr': 'Show and hide columns'}]}
+            );
+            table.buttons().container().prependTo(table.table().container());
+        }
+    )
+</script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        .page-content, th, td {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+
+        table {
+            width: 50%;
+            border: 1px solid black;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid grey;
+            z-index: 10;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+
+    <title>Datatables 6</title>
+</head>
+<body>
+
+<div id="content" class="page-content">
+
+    <h1>Datatables 6 - More rendering</h1>
+    Here, the data being rendered is a collection of projects, each of which contains a (potentially very
+    long) list of sample IDs. How can we display this without having a huge, cluttered-up 'samples' column?
+    <br/>
+    <br/>
+    Ideally, we'd want to mouse-over the cell and show a drop-down list of sample IDs. This can be done using
+    column rendering in the same way we were colouring text in example 3. Here, the sample IDs array is built
+    into a div containing the total number of samples and a dropdown list. CSS is then used to hide the
+    dropdown until a 'hover' mouse event.
+    <br/>
+
+    <table id="datatable_6">
+        <thead>
+        <tr>
+            <th>Project ID</th>
+            <th>Created</th>
+            <th>Samples</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script>
+    function render_sample_list(samples) {
+
+        /*  JSON format of /api/0.1/projects:
+         *  {
+         *      'project_id': 'project_1',
+         *      'samples': ['sample_1', 'sample_2'],
+         *      'created': '10_02_2017_12:00:00',
+         *  }
+         *
+         *  Formats as:
+         *  <div class="dropdown">
+         *      <div class="dropbtn"> 2 </div>
+         *      <div class="dropdown-content">
+         *          <div> sample_1 </div>
+         *          <div> sample_2 </div>
+         *      </div>
+         *  </div>
+         */
+
+        var l = '<div class="dropdown"><div class="dropbtn">' + samples.length + '</div><div class="dropdown-content">';
+        for (var i=0; i < samples.length; i++) {
+            l = l.concat('<div>' + samples[i] + '</div>');
+        }
+        l = l.concat('</div></div>');
+
+        return l;
+    }
+
+    $(document).ready(
+        function() {
+            var table = $('#datatable_6').DataTable(
+                {
+                    'ajax': {
+                        'url': './projects.json',  // this could be a URL for a Rest API
+                        'dataSrc': 'data'
+                    },
+
+                    'columns': [
+                        {'data': 'project_id'},
+                        {'data': 'created'},
+                        {
+                            'data': 'samples',
+                            'render': function(data, type, row, meta) {
+                                return render_sample_list(data);
+                            }
+                        }
+                    ]
+                }
+            );
+
+            new $.fn.dataTable.Buttons(
+                table,
+                {'buttons': [{'extend': 'colvis', 'text': 'cols', 'titleAttr': 'Show and hide columns'}]}
+            );
+            table.buttons().container().prependTo(table.table().container());
+        }
+    )
+</script>
+
+</body>
+</html>

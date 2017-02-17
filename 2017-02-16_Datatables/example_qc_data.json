@@ -1,0 +1,273 @@
+{
+    "data": [
+        {
+            "qc": {
+                "bases_r2": 9530459250,
+                "bases_r1": 9530459250
+            },
+            "project_id": "a_project",
+            "barcode": "TCCGCGAA",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_10"
+        },
+        {
+            "qc": {
+                "bases_r2": 9393503550,
+                "bases_r1": 9393503550
+            },
+            "project_id": "a_project",
+            "barcode": "TCTCGCGC",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_11"
+        },
+        {
+            "qc": {
+                "bases_r2": 9389222250,
+                "bases_r1": 9389222250
+            },
+            "project_id": "a_project",
+            "barcode": "TAATGCGC",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_08"
+        },
+        {
+            "qc": {
+                "bases_r2": 9645375000,
+                "bases_r1": 9645375000
+            },
+            "project_id": "a_project",
+            "barcode": "CTGAAGCT",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_07"
+        },
+        {
+            "qc": {
+                "bases_r2": 15699749250,
+                "bases_r1": 15699749250
+            },
+            "project_id": "a_project",
+            "barcode": "CGGCTATG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_09"
+        },
+        {
+            "qc": {
+                "bases_r2": 9925503450,
+                "bases_r1": 9925503450
+            },
+            "project_id": "a_project",
+            "barcode": "TCCGCGAA",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_10"
+        },
+        {
+            "qc": {
+                "bases_r2": 10045341900,
+                "bases_r1": 10045341900
+            },
+            "project_id": "a_project",
+            "barcode": "TCCGCGAA",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_10"
+        },
+        {
+            "qc": {
+                "bases_r2": 4901226750,
+                "bases_r1": 4901226750
+            },
+            "project_id": "a_project",
+            "barcode": "CTGAAGCT",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_07"
+        },
+        {
+            "qc": {
+                "bases_r2": 9658790550,
+                "bases_r1": 9658790550
+            },
+            "project_id": "a_project",
+            "barcode": "CTGAAGCT",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_07"
+        },
+        {
+            "qc": {
+                "bases_r2": 888097500,
+                "bases_r1": 888097500
+            },
+            "project_id": "another_project",
+            "barcode": "unknown",
+            "run_id": "a_run_id",
+            "sample_id": "Undetermined"
+        },
+        {
+            "qc": {
+                "bases_r2": 10163733000,
+                "bases_r1": 10163733000
+            },
+            "project_id": "a_project",
+            "barcode": "TCCGCGAA",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_10"
+        },
+        {
+            "qc": {
+                "bases_r2": 7825377750,
+                "bases_r1": 7825377750
+            },
+            "project_id": "a_project",
+            "barcode": "AGCGATAG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_12"
+        },
+        {
+            "qc": {
+                "bases_r2": 9492549300,
+                "bases_r1": 9492549300
+            },
+            "project_id": "a_project",
+            "barcode": "TCTCGCGC",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_11"
+        },
+        {
+            "qc": {
+                "bases_r2": 5272265550,
+                "bases_r1": 5272265550
+            },
+            "project_id": "a_project",
+            "barcode": "TCTCGCGC",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_11"
+        },
+        {
+            "qc": {
+                "bases_r2": 7086884700,
+                "bases_r1": 7086884700
+            },
+            "project_id": "a_project",
+            "barcode": "AGCGATAG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_12"
+        },
+        {
+            "qc": {
+                "bases_r2": 9379702500,
+                "bases_r1": 9379702500
+            },
+            "project_id": "a_project",
+            "barcode": "TCCGCGAA",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_10"
+        },
+        {
+            "qc": {
+                "bases_r2": 10752343050,
+                "bases_r1": 10752343050
+            },
+            "project_id": "a_project",
+            "barcode": "TAATGCGC",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_08"
+        },
+        {
+            "qc": {
+                "bases_r2": 983340450,
+                "bases_r1": 983340450
+            },
+            "project_id": "another_project",
+            "barcode": "unknown",
+            "run_id": "a_run_id",
+            "sample_id": "Undetermined"
+        },
+        {
+            "qc": {
+                "bases_r2": 8281412700,
+                "bases_r1": 8281412700
+            },
+            "project_id": "a_project",
+            "barcode": "CTGAAGCT",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_07"
+        },
+        {
+            "qc": {
+                "bases_r2": 8246305950,
+                "bases_r1": 8246305950
+            },
+            "project_id": "a_project",
+            "barcode": "AGCGATAG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_12"
+        },
+        {
+            "qc": {
+                "bases_r2": 7465057050,
+                "bases_r1": 7465057050
+            },
+            "project_id": "a_project",
+            "barcode": "CGGCTATG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_09"
+        },
+        {
+            "qc": {
+                "bases_r2": 13757411550,
+                "bases_r1": 13757411550
+            },
+            "project_id": "a_project",
+            "barcode": "CGGCTATG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_09"
+        },
+        {
+            "qc": {
+                "bases_r2": 12843419550,
+                "bases_r1": 12843419550
+            },
+            "project_id": "a_project",
+            "barcode": "CGGCTATG",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_09"
+        },
+        {
+            "qc": {
+                "bases_r2": 4971314850,
+                "bases_r1": 4971314850
+            },
+            "project_id": "a_project",
+            "barcode": "TCCGCGAA",
+            "run_id": "a_run_id",
+            "sample_id": "sample_B_10"
+        },
+        {
+            "qc": {
+                "bases_r2": 1394845350,
+                "bases_r1": 1394845350
+            },
+            "project_id": "another_project",
+            "barcode": "unknown",
+            "run_id": "a_run_id",
+            "sample_id": "Undetermined"
+        }
+    ],
+    "_links": {
+        "next": {
+            "title": "next page",
+            "href": "an_endpoint?page=2"
+        },
+        "self": {
+            "title": "an_endpoint",
+            "href": "an_endpoint"
+        },
+        "last": {
+            "title": "last page",
+            "href": "an_endpoint?page=529"
+        }
+    },
+    "_meta": {
+        "page": 1,
+        "max_results": 25,
+        "total": 1337
+    }
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        .page-content, th, td {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+
+        table {
+            width: 50%;
+            border: 1px solid black;
+        }
+    </style>
+
+    <title>Datatables 5</title>
+</head>
+<body>
+
+<div id="content" class="page-content">
+
+    <h1>Datatables 5 - Ajax with server-side processing</h1>
+    This datatable may appear to be broken, as the column sorting and pagination isn't working. This example
+    is intended to show the results of turning on 'processing' and 'serverSide' on initialisation. Each table
+    update (searching, sorting by a new column, going to a new page) will result in a new Ajax query. Open
+    your web browser's developer tools and you should be able to see each new request printed to the console.
+    It should be possible to use Javascript to manipulate these requests (sorting, page number, filters, etc.)
+    into an Ajax query understood by your Rest API, giving you a table that queries and renders slices of
+    data.
+    <br/>
+    <br/>
+    If you have a nice fast API with large amounts of data you may want to do this. If, however, you're
+    dealing with smaller amounts of data or if your Rest API isn't optimised, you may want to do a single
+    query that returns all of the data unpaginated and let the table paginate it client-side.
+    <br/>
+
+    <table id="datatable_5">
+        <thead>
+        <tr>
+            <th>Barcode</th>
+            <th>Sample ID</th>
+            <th>Run ID</th>
+            <th>Bases (R1)</th>
+            <th>Bases (R2)</th>
+            <th>Project ID</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    $(document).ready(
+        function() {
+
+            var cols = ['barcode', 'sample_id', 'run_id', 'qc.bases_r1', 'qc.bases_r2', 'project_id']
+
+            var table = $('#datatable_5').DataTable(
+                {
+                    'processing': true,
+                    'serverSide': true,
+
+                    'ajax': function(data, callback, settings) {
+                        console.log(data);
+
+                        /* Here, data will be something like:
+                         * {
+                         *     'order': [{'column': 0, 'dir': 'asc'}],  // column sorting
+                         *     'length': 10,                            // page size
+                         *     'start': 20,                             // offset/page number
+                         *     'search': {'regex': false, 'value': ''}  // search box
+                         * }
+                         *
+                         * This can be converted into an Ajax query understood by the Rest API
+                         */
+
+                        $.ajax(
+                            {
+                                'url': './example_qc_data.json',
+                                'data': {
+                                    'max_results': data.length,
+                                    'page': (data.start/data.length) + 1,
+                                    'sort': data.order
+                                },
+                                'success': function(json) {
+                                    // json here is a string, so we're parsing it to JSON. You wouldn't
+                                    // need to do this in a proper Rest query
+                                    json = JSON.parse(json);
+                                    var o = {
+                                        recordsTotal: json._meta.total,
+                                        recordsFiltered: json._meta.total,
+                                        data: json.data
+                                    };
+                                    callback(o);
+                                }
+                            }
+                        );
+                    },
+
+                    'columns': [
+                        {'data': 'barcode', 'defaultContent': ''},
+                        {'data': 'sample_id', 'defaultContent': ''},
+                        {'data': 'run_id', 'defaultContent': ''},
+                        {'data': 'qc.bases_r1', 'defaultContent': ''},
+                        {'data': 'qc.bases_r2', 'defaultContent': ''},
+                        {'data': 'project_id', 'defaultContent': ''}
+                    ],
+                    'order': [0]
+                }
+            );
+
+            new $.fn.dataTable.Buttons(
+                table,
+                {'buttons': [{'extend': 'colvis', 'text': 'cols', 'titleAttr': 'Show and hide columns'}]}
+            );
+            table.buttons().container().prependTo(table.table().container());
+        }
+    )
+</script>
+
+</body>
+</html>

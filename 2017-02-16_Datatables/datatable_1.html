@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        .page-content, th, td {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+
+        table {
+            width: 50%;
+            border: 1px solid black;
+        }
+    </style>
+
+    <title>Datatables</title>
+</head>
+<body>
+
+<div id="content" class="page-content">
+
+    <h1>Datatables</h1>
+    This is an example of initialising a plain HTML table as a Datatable. Simply call <code>DataTable()</code>
+    on the 'table' element. Straight away, you should be able to sort by columns, search and paginate.
+    <br/>
+
+    <table id="datatable_1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Recorded date</th>
+                <th>Up to date?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>This</td>
+                <td>542</td>
+                <td>2017-01-01</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>That</td>
+                <td>769</td>
+                <td>2017-02-04</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>Other</td>
+                <td>197</td>
+                <td>2016-12-23</td>
+                <td>False</td>
+            </tr>
+            <tr>
+                <td>Another</td>
+                <td>165</td>
+                <td>2017-01-15</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td>More</td>
+                <td>365</td>
+                <td>2017-02-10</td>
+                <td>True</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(
+        function() {
+            $('#datatable_1').DataTable();
+        }
+    )
+</script>
+
+</body>
+</html>
