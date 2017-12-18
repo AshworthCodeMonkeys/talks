@@ -1,10 +1,10 @@
-== More Snakemake ==
+# More Snakemake
 
 This session started with an intro to Snakemake, but this is better documented
 elsewhere so I'll skip to the tips and suggestions, assuming you already know the
 basics.
 
-1) Order of rules
+## 1) Order of rules
 
 When starting to use Snakemake, one of the things that confuses newcomers is
 that you are always working backwards. You start with the thing you want
@@ -13,7 +13,7 @@ For this reason, I always put the 'output' clause of my rules before the
 'input' clause, just to remind myself that the output will be evaluated first
 as Snakemake searches for rules to provide the requested output.
 
-2) Merging patterns
+## 2) Merging patterns
 
 Also when my workflow involves a merging step, I tend to use Python's standard
 glob() and re.search() functions to discover what things I want to collect up and
@@ -43,7 +43,7 @@ The print() statement reassures you that the inputs are as expected: ```['1', '2
 
 Now provide the input to your merging rule using the form ```expand("...", s=all_sequences)```.
 
-3) Syntax hilighting
+## 3) Syntax hilighting
 
 For Vim users, there is a Snakemake syntax hilighting package, but I find that Python syntax works
 very well. Just add:
@@ -52,11 +52,11 @@ very well. Just add:
 
 Near the top of the file.
 
-4) Always use -Trp
+## 4) Always use -Trp
 
 These flags add useful info to the Snakemake output (timestamp, reason, print commands) so use them.
 
-5) Three-phase execution
+## 5) Three-phase execution
 
 This isn't really a tip, but it helps to understand that Snakemake executes your workflow in three phases.
 In fact, if you don't appreciate this you'll struggle to go beyond the simplest workflows.
@@ -75,9 +75,9 @@ a location where all nodes can run it. You also need to appreciate that any code
 of your rules will be re-run, so if the code is slow, or if it takes up resouces, or if it produces
 different results from one node to another, then you will be in trouble.
 
-6) Running Snakemake on Eddie3.
+## 6) Running Snakemake on Eddie3.
 
-6a) Installing it in your home.
+### 6a) Installing it in your home.
 
 ```
 $ module load python/3.4.3
@@ -90,7 +90,7 @@ $ snakemake --version
 Note that we're not using the latest version of Snakemake since this requires Python 3.5, but 3.13.3 is
 perfectly good for most things.
 
-6b) Using DRMAA.
+### 6b) Using DRMAA.
 
 The most reliable way to control cluster jobs is via the DRMAA mechanism. To make this work properly on
 Eddie3, you need a custom job script and a wrapper script. The custom job script simpy uses 'bash -l'
@@ -131,7 +131,7 @@ $ chmod +x ~/bin/snakemake
 Note you still need to add the --drmaa flag when you run Snakemake, but with these settings that
 is all you will need to do. You can of course add extra options if you wish.
 
-6c) Avoid process timouts.
+### 6c) Avoid process timouts.
 
 On the Eddie3 login nodes, long-running processes are killed. This is a problem for Snakemake
 because you need the master process running to control the jobs. Some options are:
